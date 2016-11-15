@@ -1,11 +1,11 @@
 {
-  "name": "asteroid",
-  "version": "2.0.3",
+  "name": "@workpop/asteroid",
+  "version": "1.0.0",
   "description": "Alternative Meteor client",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "babel ./src --ignore test --out-dir ./dist",
-    "clean": "rimraf dist coverage",
+    "build": "babel ./src --ignore test --out-dir ./lib",
+    "clean": "rimraf lib coverage",
     "coverage": "env NODE_ENV=test env NODE_PATH=src babel-node $(npm bin)/isparta cover _mocha -- --recursive test/unit",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "dev": "npm test -- --watch",
@@ -16,21 +16,13 @@
     "e2e-test": "env NODE_ENV=test env NODE_PATH=src _mocha --compilers js:babel-core/register --recursive test/e2e",
     "e2e-dev": "npm run e2e-test -- --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mondora/asteroid.git"
-  },
   "keywords": [
     "ddp",
     "asteroid",
     "meteor"
   ],
-  "author": "Paolo Scanferla <paolo.scanferla@mondora.com>",
+  "author": "Workpop>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mondora/asteroid/issues"
-  },
-  "homepage": "https://github.com/mondora/asteroid",
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
