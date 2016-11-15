@@ -1,3 +1,17 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/Workpop/asteroid/compare/v2.0.3...v1.0.1) (2016-11-15)
+
+
+### Bug Fixes
+
+* **version:** add standard version to manage release ([f856335](https://github.com/Workpop/asteroid/commit/f856335))
+
+
+
 ## 2.0.3 (October 7, 2016)
 
 Fixed a bug on the subscription base mixin when restart the subscription.

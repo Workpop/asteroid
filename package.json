@@ -1,6 +1,6 @@
 {
   "name": "@workpop/asteroid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Alternative Meteor client",
   "main": "lib/index.js",
   "scripts": {
