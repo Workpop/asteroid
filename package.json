@@ -4,6 +4,7 @@
   "description": "Alternative Meteor client",
   "main": "lib/index.js",
   "scripts": {
+    "release": "standard-version",
     "build": "babel ./src --ignore test --out-dir ./lib",
     "clean": "rimraf lib coverage",
     "coverage": "env NODE_ENV=test env NODE_PATH=src babel-node $(npm bin)/isparta cover _mocha -- --recursive test/unit",
@@ -38,7 +39,8 @@
     "isparta": "^4.0.0",
     "mocha": "^3.1.0",
     "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "standard-version": "^3.0.0"
   },
   "dependencies": {
     "ddp.js": "^2.2.0",
