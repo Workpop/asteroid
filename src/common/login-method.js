@@ -41,7 +41,7 @@ export function onLogout() {
   if (tokenExpires) {
     localStorage.removeItem(LOGIN_TOKEN_EXPIRES_KEY);
   }
-
+  console.log('Emitting loggedOut');
   this.emit('loggedOut');
 
   return null;
@@ -51,8 +51,7 @@ export function resumeLogin() {
   const resume = localStorage.getItem(LOGIN_TOKEN_KEY);
 
   if (!resume) {
-    console.error('No Login Token'); //eslint-disable-line no-console
-    this.emit('loginFailure');
+    console.log('No Login Token'); //eslint-disable-line no-console
     return this.onLogout();
   }
 
