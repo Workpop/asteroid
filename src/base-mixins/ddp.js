@@ -9,7 +9,7 @@
  *     connection with the server
  */
 
-import DDP from "ddp.js";
+import DDP from 'ddp.js';
 
 /*
  *   Public methods
@@ -33,7 +33,7 @@ export function init(options) {
     SocketConstructor = WebSocket,
     autoConnect,
     autoReconnect,
-    reconnectInterval
+    reconnectInterval,
   } = options;
   this.endpoint = endpoint;
   const ddpOptions = {
@@ -41,9 +41,9 @@ export function init(options) {
     SocketConstructor,
     autoConnect,
     autoReconnect,
-    reconnectInterval
+    reconnectInterval,
   };
   this.ddp = new DDP(ddpOptions)
-    .on("connected", () => this.emit("connected"))
-    .on("disconnected", () => this.emit("disconnected"));
+    .on('connected', () => { return this.emit('connected'); })
+    .on('disconnected', () => { return this.emit('disconnected'); });
 }

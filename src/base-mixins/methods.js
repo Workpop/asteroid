@@ -16,7 +16,7 @@ export function apply(method, params) {
     const id = this.ddp.method(method, params);
     this.methods.cache[id] = {
       resolve,
-      reject
+      reject,
     };
   });
 }
@@ -31,9 +31,9 @@ export function call(method, ...params) {
 
 export function init() {
   this.methods = {
-    cache: {}
+    cache: {},
   };
-  this.ddp.on("result", ({ id, error, result }) => {
+  this.ddp.on('result', ({ id, error, result }) => {
     const method = this.methods.cache[id];
     if (error) {
       method.reject(error);

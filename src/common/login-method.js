@@ -1,29 +1,60 @@
-import * as multiStorage from "./multi-storage";
+import localStorage from '@workpop/localstorage';
+
+// Key names to use in localStorage
+const DEFAULT_LOGIN_EXPIRATION_DAYS_IN_MS = 90 * 24 * 60 * 60 * 1000;
+const LOGIN_TOKEN_KEY = 'Meteor.loginToken';
+const LOGIN_TOKEN_EXPIRES_KEY = 'Meteor.loginTokenExpires';
+const USER_ID_KEY = 'Meteor.userId';
+
+function tokenExpiration(when) {
+  return new Date((new Date(when)).getTime() + DEFAULT_LOGIN_EXPIRATION_DAYS_IN_MS);
+}
 
 export function onLogin({ id, token }) {
   this.userId = id;
   this.loggedIn = true;
-  return multiStorage.set('Meteor.loginToken', token)
-    .then(this.emit.bind(this, "loggedIn", id))
-    .then(() => id);
+
+  localStorage.setItem(USER_ID_KEY, id);
+  localStorage.setItem(LOGIN_TOKEN_KEY, token);
+
+  const tokenExpires = localStorage.getItem(LOGIN_TOKEN_EXPIRES_KEY);
+
+  if (!tokenExpires) {
+    localStorage.setItem(LOGIN_TOKEN_EXPIRES_KEY, tokenExpiration(new Date()));
+  }
+
+  // emit the logged in event to all clients
+  this.emit('loggedIn', id);
+
+  return id;
 }
 
 export function onLogout() {
   this.userId = null;
   this.loggedIn = false;
-  return multiStorage.del('Meteor.loginToken')
-    .then(this.emit.bind(this, "loggedOut"))
-    .then(() => null);
+
+  localStorage.removeItem(USER_ID_KEY);
+  localStorage.removeItem(LOGIN_TOKEN_KEY);
+
+  const tokenExpires = localStorage.getItem(LOGIN_TOKEN_EXPIRES_KEY);
+
+  if (tokenExpires) {
+    localStorage.removeItem(LOGIN_TOKEN_EXPIRES_KEY);
+  }
+
+  this.emit('loggedOut');
+
+  return null;
 }
 
 export function resumeLogin() {
-  return multiStorage.get('Meteor.loginToken')
-    .then(resume => {
-      if (!resume) {
-        throw new Error("No login token");
-      }
-      return { resume };
-    })
-    .then(this.login.bind(this))
-    .catch(onLogout.bind(this));
+  const resume = localStorage.getItem(LOGIN_TOKEN_KEY);
+
+  if (!resume) {
+    console.error('No Login Token'); //eslint-disable-line no-console
+    this.emit('loginFailure');
+    return this.onLogout();
+  }
+
+  return this.login({ resume });
 }

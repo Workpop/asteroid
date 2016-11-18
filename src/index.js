@@ -1,11 +1,10 @@
-import assign from "lodash.assign";
-import EventEmitter from "wolfy87-eventemitter";
-
-import * as ddp from "./base-mixins/ddp";
-import * as login from "./base-mixins/login";
-import * as methods from "./base-mixins/methods";
-import * as loginWithPassword from "./base-mixins/password-login";
-import * as subscriptions from "./base-mixins/subscriptions";
+import EventEmitter from 'wolfy87-eventemitter';
+import * as ddp from './base-mixins/ddp';
+import * as login from './base-mixins/login';
+import * as methods from './base-mixins/methods';
+import * as loginWithPassword from './base-mixins/password-login';
+import * as subscriptions from './base-mixins/subscriptions';
+import { onLogin, onLogout } from './common/login-method';
 
 /*
  *   A mixin is a plain javascript object. Mixins are composed by merging the
@@ -23,21 +22,22 @@ import * as subscriptions from "./base-mixins/subscriptions";
  *   ```
  */
 
-export default function createClass(customMixins = []) {
+export function createClass(customMixins = []) {
 
   // Include base mixins before custom ones
-  const mixins = [ddp, methods, subscriptions, login, loginWithPassword]
-    .concat(customMixins);
+  const mixins = [ddp, methods, subscriptions, login, loginWithPassword, ...customMixins];
 
   const Asteroid = function Asteroid(/* arguments */) {
     // Call each init method
-    mixins.forEach(({ init }) => init && init.apply(this, arguments));
+    mixins.forEach(({ init }) => { return init && init.apply(this, arguments); });
   };
 
   Asteroid.prototype = Object.create(EventEmitter.prototype);
+  Asteroid.prototype.onLogin = onLogin;
+  Asteroid.prototype.onLogout = onLogout;
   Asteroid.prototype.constructor = Asteroid;
   // Merge all mixins into Asteroid.prototype
-  assign(Asteroid.prototype, ...mixins);
+  Asteroid.prototype = Object.assign(Asteroid.prototype, ...mixins);
   // And delete the "dangling" init property
   delete Asteroid.prototype.init;
 

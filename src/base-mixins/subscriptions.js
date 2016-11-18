@@ -10,11 +10,11 @@
  *     sessions, as of version 1.2.0.2)
  */
 
-import assign from "lodash.assign";
-import EventEmitter from "wolfy87-eventemitter";
+import assign from 'lodash.assign';
+import EventEmitter from 'wolfy87-eventemitter';
 
-import SubscriptionCache from "../common/subscription-cache";
-import fingerprintSub from "../common/fingerprint-sub";
+import SubscriptionCache from '../common/subscription-cache';
+import fingerprintSub from '../common/fingerprint-sub';
 
 /*
  *   Private methods: they are invoked with the asteroid instance as context, but
@@ -31,7 +31,7 @@ function restartSubscription(sub) {
     // connected handler is invoked, the ddp instance disconnected.
     // Therefore we update the stillInQueue status fo the subscription
     this.ddp.sub(sub.name, sub.params, sub.id);
-    sub.stillInQueue = (this.ddp.status !== "connected");
+    sub.stillInQueue = (this.ddp.status !== 'connected');
   } else {
     // Since we're restarting subscriptions after a connection, we know
     // that now the subscriptions which were in ddp's queue will be sent,
@@ -57,7 +57,7 @@ export function subscribe(name, ...params) {
     // in the queue. For this reason, we save ddp's connection status onto
     // the subscription object and we check it later to decide wether to
     // restart the subscription or not.
-    const stillInQueue = (this.ddp.status !== "connected");
+    const stillInQueue = (this.ddp.status !== 'connected');
     // Build the subscription object and save it in the cache
     sub = assign(
       new EventEmitter(),
@@ -66,7 +66,7 @@ export function subscribe(name, ...params) {
         id,
         name,
         params,
-        stillInQueue
+        stillInQueue,
       }
     );
     this.subscriptions.cache.add(sub);
@@ -85,21 +85,21 @@ export function unsubscribe(id) {
 
 export function init() {
   this.subscriptions = {
-    cache: new SubscriptionCache()
+    cache: new SubscriptionCache(),
   };
   this.ddp
-    .on("ready", ({ subs }) => {
+    .on('ready', ({ subs }) => {
       subs.forEach(id => {
-        this.subscriptions.cache.get(id).emit("ready");
+        this.subscriptions.cache.get(id).emit('ready');
       });
     })
-    .on("nosub", ({ error, id }) => {
+    .on('nosub', ({ error, id }) => {
       if (error) {
-        this.subscriptions.cache.get(id).emit("error", error);
+        this.subscriptions.cache.get(id).emit('error', error);
       }
       this.subscriptions.cache.del(id);
     })
-    .on("connected", () => {
+    .on('connected', () => {
       this.subscriptions.cache.forEach(restartSubscription.bind(this));
     });
 }
