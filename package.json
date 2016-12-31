@@ -53,7 +53,7 @@
   "dependencies": {
     "@workpop/localstorage": "^1.0.0",
     "ddp.js": "^2.2.0",
-    "lodash": "^4.17.2",
+    "lodash": "^4.17.4",
     "wolfy87-eventemitter": "^5.1.0"
   }
 }
