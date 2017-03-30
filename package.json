@@ -39,7 +39,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
-    "coveralls": "^2.11.14",
+    "coveralls": "^2.13.0",
     "eslint": "^3.7.1",
     "faye-websocket": "^0.11.0",
     "install": "^0.8.2",
