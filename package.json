@@ -48,7 +48,7 @@
     "npm": "^4.0.2",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0",
-    "standard-version": "^3.0.0"
+    "standard-version": "^4.2.0"
   },
   "dependencies": {
     "@workpop/localstorage": "^1.0.0",
