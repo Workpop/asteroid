@@ -54,6 +54,6 @@
     "@workpop/localstorage": "^1.0.0",
     "ddp.js": "^2.2.0",
     "lodash": "^4.17.2",
-    "wolfy87-eventemitter": "^5.1.0"
+    "wolfy87-eventemitter": "^5.2.0"
   }
 }
