@@ -27,7 +27,7 @@
   "author": "Workpop>",
   "license": "MIT",
   "devDependencies": {
-    "@workpop/eslint-config-workpop": "0.0.5",
+    "@workpop/eslint-config-workpop": "0.0.9",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
